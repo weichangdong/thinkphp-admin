@@ -1,0 +1,43 @@
+<{extends file="Layout/list.html"}>
+<{block name="title"}><title><{$big_menu[1]}></title><{/block}>
+<{block name="subnav"}>
+    <a class="add fb" href="<{$big_menu[0]}>"><em><{$big_menu[1]}></em></a>&nbsp;&nbsp;&nbsp;<a class="on" href="<{$smarty.const.__CONTROLLER__}>/index"><em>联动菜单管理</em></a>
+<{/block}>
+<{block name="main"}>
+    <form name="myform" action="<{$smarty.const.__CONTROLLER__}>/listorder" method="post">
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="10%">排序</th>
+                        <th width="10%">ID</th>
+                        <th width="10%" align="left">菜单名称</th>
+                        <th width="20%">菜单描述</th>
+                        <th width="15%">管理操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <{foreach from=$menus key=key item=value}>
+                    <tr>
+                        <td width="10%" align="center"><input name="listorder[<{$value['id']}>]" type="text" size="3" value="<{$value['listorder']}>" class="input-text-c input-text"></td>
+                        <td width="10%" align="center"><{$value['id']}></td>
+                        <td width="10%" align="left"><{$value['name'] }></td>
+                        <td width="20%" align="center"><{$value['description']}></td>
+                        <td width="15%" align="center">
+                            <a href="<{$smarty.const.__CONTROLLER__}>/show_sub_menu?keyid=<{$value['id']}>&parentid=0">管理子菜单</a> | 
+							<{assign var="wcd" value=$value['id']}>
+							<a href="javascript:art.dialog.open('<{$smarty.const.__CONTROLLER__}>/add/keyid/<{$wcd}>/parentid/0', { id:'add', title:'添加子菜单菜单',  width:'540px', height:'320px', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById('dosubmit'); form.click(); return false; }, cancel: true, lock: true});void(0);">添加子菜单</a> | 	
+							
+							<a href="javascript:art.dialog.open('<{$smarty.const.__CONTROLLER__}>/edit/id/<{$wcd}>', { id:'edit', title:'修改',  width:'540px', height:'320px', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById('dosubmit'); form.click(); return false; }, cancel: true, lock: true});void(0);">修改</a> | 
+							<a onclick="return ConfirmDel('确认删除<{$value['name']}>及其子栏目?');" href="<{$smarty.const.__CONTROLLER__}>/delete_top/id/<{$value['id']}>">删除</a>
+                        </td>
+                    </tr>
+                    <{/foreach}>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn">
+            <input type="submit" class="button" name="排序" name="dosubmit" />
+        </div>
+    </form>
+<{/block}>

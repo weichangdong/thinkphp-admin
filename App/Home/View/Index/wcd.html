@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>wcd</title>
+</head>
+<body>
+
+<{$smarty.const.__CONTROLLER__}>
+<br />
+
+<{$smarty.const.__MODULE__}>
+<br />
+    <{$wcd}>
+<br />
+<{foreach from=$yy item=v key=k}>
+       <{$v}>=><{$v}>
+<{/foreach}>
+
+<br />
+<{asset('js/admin/index.js')}>
+<br />
+<{C('COPYRIGHT')}>
+<br />
+<{$wcd}><{$wcd2}>
+<br />
+<{$Think.MODULE_NAME}>
+</body>
+</html>

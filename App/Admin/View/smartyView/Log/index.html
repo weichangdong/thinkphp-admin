@@ -1,0 +1,93 @@
+<{extends file="Layout/list.html"}>
+<{block name="title"}><title>日志管理</title><{/block}>
+<{block name="subheader"}>
+    <script type="text/javascript" src="<{asset('js/JSCal/jscal2.js')}>"></script>
+    <script type="text/javascript" src="<{asset('js/JSCal/lang/cn.js')}>"></script>
+    <link rel="stylesheet" type="text/css" href="<{asset('css/JSCal/jscal2.css')}>">
+    <link rel="stylesheet" type="text/css" href="<{asset('css/JSCal/border-radius.css')}>">
+    <link rel="stylesheet" type="text/css" href="<{asset('css/JSCal/win2k/win2k.css')}>">
+    <style type="text/css">
+        input#start_time, input#end_time {
+            background: white url("<{asset('images/admin/input_date.png')}>") no-repeat right 2px;
+        }
+    </style>
+<{/block}>
+<{block name="subnav"}>
+    <a class="on" href="<{$smarty.const.__MODULE__}>/Menu/index"><em>日志查询</em></a>
+<{/block}>
+
+<{block name="main"}>
+        <form name="searchform" action="<{$smarty.const.__MODULE__}>/Log/search" method="get">
+            <table width="100%" cellspacing="0" class="search-form">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="explain-col">
+                                用户名:<input type="text" size="20" name="account" class="input-text" value="<{if ($select['account'])}><{$select['account']}><{/if}>" />
+                                ip:<input type="text" size="20" name="login_ip" class="input-text" />
+                                登陆状态:<select name="status">
+                                <option value="all" <{if $select['status'] == 'all'}>selected<{/if}> >全部</option>
+                                <option value="1" <{if $select['status'] == 1}>selected<{/if}> >操作成功</option>
+                                <option value="0" <{if $select['status'] == 0}>selected<{/if}> >操作失败</option>
+                                </select>
+                                时间: <input type="text" name="start_time" id="start_time" value="<{if ($select['start_time']) }><{$select['start_time']}><{/if}>" size="21" class="input-text" readonly=""><script type="text/javascript">
+                                Calendar.setup({
+                                    weekNumbers: true,
+                                    inputField : "start_time",
+                                    trigger    : "start_time",
+                                    dateFormat: "%Y-%m-%d %H:%M:%S",
+                                    showTime: true,
+                                    minuteStep: 1,
+                                    onSelect   : function() {this.hide();}
+                                });</script>  至  <input type="text" name="end_time" id="end_time" value="<{if ($select['end_time']) }><{$select['end_time']}><{/if}>" size="21" class="input-text" readonly=""><script type="text/javascript">
+                                Calendar.setup({
+                                    weekNumbers: true,
+                                    inputField : "end_time",
+                                    trigger    : "end_time",
+                                    dateFormat: "%Y-%m-%d %H:%M:%S",
+                                    showTime: true,
+                                    minuteStep: 1,
+                                    onSelect   : function() {this.hide();}
+                                });</script><input type="submit" value="搜索" class="button" name="dosubmit">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="pad-lr-10 table-list">
+        <table width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th width="100px">用户名</th>
+                    <th width="100px">模块</th>
+                    <th width="100px">操作</th>
+                    <th>文件</th>
+                    <th width="150px">时间</th>
+                    <th width="100px">状态</th>
+                    <th width="200px">IP地址</th>
+                </tr>
+            </thead>
+            <tbody>
+                <{foreach from=$list item=vo}>
+                    <tr>
+                        <td align="center"><{$vo['username']}></td>
+                        <td align="center"><{$vo['module']}></td>
+                        <td align="center"><{$vo['action']}></td>
+                        <td><div><{$vo['querystring']}></td>
+                        <td align="center"><{$vo["date"]}></td>
+                        <td align="center">
+                            <{if $vo['status'] == 1}>操作成功<{else}><font style='color:red'>操作失败</font><{/if}>
+                        </td>
+                        <td align="center"><{get_location($vo["ip"])}></td>
+                    </tr>
+                <{/foreach}>
+            </tbody>
+        </table>
+    </div>
+    <div class="bk15"></div>
+    <div id="pages">
+        <{$page}>
+    </div>
+<{/block}>

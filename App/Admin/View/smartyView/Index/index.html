@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="off">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+    <title><{$seo['title']}> - 后台管理中心</title>
+    <link href="<{asset('css/admin/reset.css')}>" rel="stylesheet" type="text/css">
+    <link href="<{asset('css/admin/zh-cn-system.css')}>" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="<{asset('js/jquery.min.js')}>"></script>
+    <script type="text/javascript" src="<{asset('js/jquery.cookie.js')}>"></script>
+    <script src="<{asset('js/artdialog/jquery.artDialog.source.js')}>&skin=default"></script>
+    <script type="text/javascript" src="<{asset('js/admin/admin_common.js')}>"></script>
+    <style type="text/css">
+        .objbody{overflow:hidden}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="logo lf">
+        <a href="<{$smarty.const.__MODULE__}>">
+            <span class="invisible">TP-Admin</span>
+        </a>
+    </div>
+    <div class="col-auto">
+        <div class="log white cut_line">
+            您好！<{$user_info['account']}> [<{$user_info['name']}>]<span>|</span><a href="<{$smarty.const.__MODULE__}>/Public/loginout">[退出]</a><span></span>
+        </div>
+        <ul class="nav white" id="top_menu">
+            <{foreach from=$top_menu key=key item=value}>
+            <li id="_M<{$value['id']}>" class="top_menu <{if $key == 0}>on<{/if}>">
+                <a href="javascript:_M(<{$value['id']}>,'<{$smarty.const.__MODULE__}>/<{$value['module']}>/<{$value['action']}>')" hidefocus="true" style="outline:none;"><{$value['title']}></a>
+            </li>
+            <{/foreach}>
+            <li class="tab_web">
+
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="content" style="width: auto;">
+    <div class="col-left left_menu">
+        <div id="Scroll" style="height: 527px;">
+            <div id="leftMain"></div>
+        </div>
+        <a href="javascript:;" id="openClose" hidefocus="hidefocus" class="open" title="展开与关闭"><span class="hidden">展开</span></a>
+    </div>
+    <div class="col-1 lf cat-menu" id="display_center_id" style="display:none;" height="100%">
+        <div class="content">
+            <iframe name="center_frame" id="center_frame" src="" frameborder="false" scrolling="auto" style="border: none; height: 556px;" width="100%" height="auto" allowtransparency="true"></iframe>
+        </div>
+    </div>
+    <div class="col-auto mr8">
+        <div class="crumbs">
+            当前位置：<span id="current_pos">我的面板 &gt; 首页</span>
+        </div>
+        <div class="col-1">
+            <div class="content" style="position:relative; overflow:hidden;">
+                <iframe name="right" id="rightMain" src="<{$smarty.const.__MODULE__}>/Index/main" frameborder="false" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-web-panel hidden">
+    <ul>
+        <{foreach from=$sites key=key item=site }>
+        <li style="margin:0"><a href="<{$smarty.const.__MODULE__}>/Index/change_site/siteid/<{$site['id']}>"><{$site['name']}></a></li>
+        <{/foreach}>
+    </ul>
+</div>
+<div class="scroll" style="display: none;">
+    <a href="javascript:;" class="per" title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(1);"></a>
+    <a href="javascript:;" class="next" title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(2);"></a>
+</div>
+<script type="text/javascript">
+    var module = "<{$smarty.const.__MODULE__}>";
+    setInterval("session_life()", 60000);
+    function session_life() {
+        $.get("<{$smarty.const.__CONTROLLER__}>/public_session_life");
+    }
+</script>
+<script type="text/javascript" src="<{asset('js/admin/index.js')}>"></script>
+</body>
+</html>

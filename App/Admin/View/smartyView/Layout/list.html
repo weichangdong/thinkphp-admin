@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <{block name="title"}><title>后台管理中心</title><{/block}>
+    <link href="<{asset('css/admin/reset.css')}>" rel="stylesheet" type="text/css">
+    <link href="<{asset('css/admin/zh-cn-system.css')}>" rel="stylesheet" type="text/css">
+    <link href="<{asset('css/admin/table_form.css')}>" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="<{asset('js/jquery.min.js')}>"></script>
+    <script type="text/javascript" src="<{asset('js/jquery.cookie.js')}>"></script>
+    <script type="text/javascript" src="<{asset('js/admin/admin_common.js')}>"></script>
+    <script src="<{asset('js/artdialog/jquery.artDialog.source.js')}>&skin=default"></script>
+    <script src="<{asset('js/artdialog/plugins/iframeTools.source.js')}>"></script>
+    <{block name="subheader"}><{/block}>
+</head>
+<body>
+    <div class="subnav">
+        <div class="content-menu ib-a blue line-x">
+            <{block name="subnav"}>
+                <a class="add fb" href="<{$smarty.const.__CONTROLLER__}>/add"><em>添加</em></a>　    <a class="on" href="<{$smarty.const.__CONTROLLER__}>/index"><em>列表</em></a>
+            <{/block}>
+        </div>
+    </div>
+    <div class="pad-lr-10">
+        <{block name="search"}><{/block}>
+        <{block name="main"}>
+            <form name="myform" action="<{$smarty.const.__CONTROLLER__}>/listorder" method="post">
+                <div class="table-list">
+                    <table width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="16"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+                                <th width="37">排序</th>
+                                <th width="40">ID</th>
+                                <{foreach from=$list_fields key=key item=field}>
+                                  <th><{$field['name']}></th>
+                                <{/foreach}>
+                                <th width="118">更新时间</th>
+                                <th width="102">管理操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <{foreach from=$contents key=key item=content}>
+                            <tr>
+                                <td align="center"><input class="inputcheckbox " name="ids[]" value="<{$content['id']}>" type="checkbox"></td>
+                                <td align="center"><input name="listorders[<{$content['id']}>]" type="text" size="3" value="<{$content['listorder']}>" class="input-text-c input-text"></td>
+                                <td align="center"><{$content['id']}></td>
+                                <{foreach from=$list_fields key=key item=field}>
+                                <td><{$content[$field['field']]}></td>
+                                <{/foreach}>
+                                <td align="center"><{$content['updatetime']}></td>
+                                <td align="center">
+                                    <a href="<{$smarty.const.__CONTROLLER__}>/edit?id=<{$content['id'] }>">修改</a> | <a href="<{$smarty.const.__CONTROLLER__}>/delete?id=<{$content['id']}>" onClick="return confirm('确认删除『 '+<{$content['title']}>+' 』 吗？')">删除</a>
+                                </td>
+                            </tr>
+                            <{/foreach}>
+                        </tbody>
+                    </table>
+
+                    <div class="btn"><label for="check_box"><{U('Content/delete')}>全选/取消</label>
+                        <input name="submit" type="submit" class="button" value="排序">&nbsp;
+                        <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action=\"<{U('Content/delete')}>?catid=<{$catid}>\";return confirm('确认要删除 『 选中 』 吗？')">
+                    </div>
+                    <{if isset($pages)}>
+                    <div id="pages">
+                        <{$pages}>
+                    </div>
+                    <{/if}>
+                </div>
+            </form>
+        <{/block}>
+    </div>
+    <{block name="footer"}>
+        <script type="text/javascript">
+            window.top.$('#display_center_id').css('display','none');
+        </script>
+    <{/block}>
+</body>
+</html>

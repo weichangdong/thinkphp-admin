@@ -1,0 +1,45 @@
+<{extends file="Layout/list.html"}>
+<{block name="1"}><title>角色管理</title><{/block}>
+ <{block name="subnav"}>
+    <a class="add fb" href="<{$smarty.const.__MODULE__}>/Role/add"><em>添加角色</em></a>&nbsp;&nbsp;&nbsp;
+    <a class="on" href="<{$smarty.const.__MODULE__}>/Role/index"><em>角色管理</em></a>
+<{/block}>
+<{block name="main"}>
+    <form name="myform" action="<{$smarty.const.__CONTROLLER__}>/listorder" method="post">
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <!-- <th width="10%" align="center">排序</th> -->
+                        <th width="10%" align="center">ID</th>
+                        <th width="15%" align="left">角色名称</th>
+                        <th width="265" align="left">角色描述</th>
+                        <th width="5%" align="left">状态</th>
+                        <th class="text-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <{foreach from=$roles key=key item=role}>
+                    <tr>
+                        <td align="center" width="10%"><{$role['id']}></td>
+                        <td width="15%"><{$role['name']}></td>
+                        <td width="265"><{$role['remark']}></td>
+                        <td width="5%"><{if $role['status']==1}><font color='red'>√</font><{else}><font color='blue'>×</font><{/if}></td>
+                        <td class="text-c">
+                            <{if $role['id'] !='1'}>
+                            <a href="<{$smarty.const.__MODULE__}>/Role/limits/role_id/<{$role['id']}>">权限分配</a> | <a href="<{$smarty.const.__MODULE__}>/Role/edit/id/<{$role['id']}>">修改</a> | <a onclick="return ConfirmDel();" href="<{$smarty.const.__MODULE__}>/Role/del/id/<{$role['id']}>">删除</a>
+                            <{else}>
+                            <font color="#cccccc">修改 | 删除 | 权限分配</font>
+                            <{/if}>
+                        </td>
+                    </tr>
+                    <{/foreach}>
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="btn">
+            <input name="dosubmit" type="submit" class="button" value="排序">
+        </div> -->
+        <div id="pages"><{$pages}></div>
+    </form>
+<{/block}>

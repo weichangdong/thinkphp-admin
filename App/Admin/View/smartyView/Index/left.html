@@ -1,0 +1,27 @@
+<{foreach from=$menulist key=key item=menu}>
+<h3 class="f14 on"><span class="switchs cu on" title="展开与收缩"></span><{$menu['title']}></h3>
+<ul>
+    <{foreach from=$menu['childs']  item=child_menu}>
+    <li id="_MP<{$child_menu['id']}>" class="sub_menu">
+        <a href="javascript:_MP(<{$child_menu['id']}>,'<{$smarty.const.__MODULE__}>/<{$child_menu['module']}>/<{$child_menu['action']}>?cid=<{$child_menu['id']}><{if !empty($child_menu['params'])}>&<{$child_menu['params']}><{/if}>');" hidefocus="true" style="outline:none;"><{$child_menu['title']}></a>
+    </li>
+    <{/foreach}>
+</ul>
+<{/foreach}>
+<script type="text/javascript">
+    $(".switchs").each(function(i) {
+        var ul = $(this).parent().next();
+        $(this).click(
+            function(){
+                if(ul.is(':visible')){
+                    ul.hide();
+                    $(this).removeClass('on');
+                    $(this).closest('h3').removeClass('on');
+                }else{
+                    ul.show();
+                    $(this).addClass('on');
+                    $(this).closest('h3').addClass('on');
+                }
+            })
+    });
+</script>
