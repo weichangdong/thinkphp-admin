@@ -9,4 +9,4 @@
 
 ## 后台效果
 
-![https://github.com/weichangdong/thinkphp-admin/blob/master/tp-admin.png](效果图片)
+![https://github.com/weichangdong/thinkphp-admin/blob/master/tp-admin.png](https://github.com/weichangdong/thinkphp-admin/blob/master/tp-admin.png)
